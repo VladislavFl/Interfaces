@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+    public class GameManager : MonoBehaviour {
 
     #region Variables
 
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour {
     private             IEnumerator         IE_WaitTillNextRound    = null;
     private             IEnumerator         IE_StartTimer           = null;
 
+    public int currentQuestions = 1;
+    public int countQuestions = 1;
+
+
     private             bool                IsFinished
     {
         get
@@ -38,6 +42,10 @@ public class GameManager : MonoBehaviour {
     }
 
     #endregion
+
+    //public int k = 0; 
+    [SerializeField]
+    public Parametrs parametrs;
 
     #region Default Unity methods
 
@@ -139,6 +147,7 @@ public class GameManager : MonoBehaviour {
         {
             UpdateTimer(question.UseTimer);
         }
+
     }
 
     /// <summary>
@@ -146,6 +155,10 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void Accept()
     {
+        //Debug.Log("Текущий: " + currentQuestions);
+        currentQuestions++;
+        
+        
         UpdateTimer(false);
         bool isCorrect = CheckAnswers();
         FinishedQuestions.Add(currentQuestion);
@@ -179,6 +192,7 @@ public class GameManager : MonoBehaviour {
             IE_WaitTillNextRound = WaitTillNextRound();
             StartCoroutine(IE_WaitTillNextRound);
         }
+        
     }
 
     #region Timer Methods
@@ -270,34 +284,45 @@ public class GameManager : MonoBehaviour {
     /// Function that is called to load all questions from the Resource folder.
     /// </summary>
     void LoadQuestions()
-    {
-        int k = SceneManager.GetActiveScene().buildIndex;
-        if (k == 2)
+    {       
+        int k = parametrs.K;
+        if (k == 1)
         {
             Object[] objs = Resources.LoadAll("Questions", typeof(Question));
             _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
             for (int i = 0; i < objs.Length; i++)
             {
                 _questions[i] = (Question)objs[i];
             }
+            
         }
-        else if (k == 3)
+        else if (k == 2)
         {
             Object[] objs = Resources.LoadAll("Questions2", typeof(Question));
             _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
             for (int i = 0; i < objs.Length; i++)
             {
                 _questions[i] = (Question)objs[i];
             }
+
+           
         }
-        else if (k == 4)
+        else if (k == 3)
         {
             Object[] objs = Resources.LoadAll("Questions3", typeof(Question));
             _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
             for (int i = 0; i < objs.Length; i++)
             {
                 _questions[i] = (Question)objs[i];
             }
+
+            
         }
     }
 
@@ -337,6 +362,7 @@ public class GameManager : MonoBehaviour {
         if (events.ScoreUpdated != null)
         {
             events.ScoreUpdated();
+            
         }
     }
 

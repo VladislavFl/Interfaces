@@ -32,6 +32,12 @@ public struct UIElements
     [SerializeField] TextMeshProUGUI scoreText;
     public TextMeshProUGUI ScoreText { get { return scoreText; } }
 
+    [SerializeField] TextMeshProUGUI current;
+    public TextMeshProUGUI Current { get { return current; } }
+
+    [SerializeField] TextMeshProUGUI all;
+    public TextMeshProUGUI All { get { return all; } }
+
     [Space]
 
     [SerializeField] Animator resolutionScreenAnimator;
@@ -56,6 +62,9 @@ public struct UIElements
 
     [SerializeField] RectTransform finishUIElements;
     public RectTransform FinishUIElements { get { return finishUIElements; } }
+
+    [SerializeField] Text resultSrore;
+    public Text ResultSrore { get { return resultSrore; } }
 }
 public class UIManager : MonoBehaviour {
 
@@ -78,6 +87,9 @@ public class UIManager : MonoBehaviour {
     private             int                    resStateParaHash             = 0;
 
     private             IEnumerator            IE_DisplayTimedResolution    = null;
+    private int mark = 0;
+
+    public GameManager manager;
 
     #endregion
 
@@ -91,6 +103,7 @@ public class UIManager : MonoBehaviour {
         events.UpdateQuestionUI         += UpdateQuestionUI;
         events.DisplayResolutionScreen  += DisplayResolution;
         events.ScoreUpdated             += UpdateScoreUI;
+
     }
     /// <summary>
     /// Function that is called when the behaviour becomes disabled
@@ -107,8 +120,11 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     void Start()
     {
+
         UpdateScoreUI();
         resStateParaHash = Animator.StringToHash("ScreenState");
+        
+
     }
 
     #endregion
@@ -118,8 +134,10 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     void UpdateQuestionUI(Question question)
     {
+        uIElements.All.text = manager.countQuestions.ToString();
         uIElements.QuestionInfoTextObject.text = question.Info;
         CreateAnswers(question);
+
     }
     /// <summary>
     /// Function that is used to display resolution screen.
@@ -157,6 +175,7 @@ public class UIManager : MonoBehaviour {
         switch (type)
         {
             case ResolutionScreenType.Correct:
+                
                 uIElements.ResolutionBG.color = parameters.CorrectBGColor;
                 uIElements.ResolutionStateInfoText.text = "Хорошо!";
                 uIElements.ResolutionScoreText.text = "+" + score;
@@ -168,12 +187,14 @@ public class UIManager : MonoBehaviour {
                 break;
             case ResolutionScreenType.Finish:
                 uIElements.ResolutionBG.color = parameters.FinalBGColor;
-                uIElements.ResolutionStateInfoText.text = "Итог: ";
 
+                uIElements.ResultSrore.text = "Итог: " + events.CurrentFinalScore;
+                uIElements.ResolutionStateInfoText.text = "Оценка: ";
                 StartCoroutine(CalculateScore());
                 uIElements.FinishUIElements.gameObject.SetActive(true);
-                uIElements.HighScoreText.gameObject.SetActive(true);
+
                 uIElements.HighScoreText.text = ((highscore > events.StartupHighscore) ? "<color=yellow>new </color>" : string.Empty) + "Rec: " + highscore;
+                
                 break;
         }
     }
@@ -184,7 +205,10 @@ public class UIManager : MonoBehaviour {
     IEnumerator CalculateScore()
     {
         var scoreValue = 0;
-        while (scoreValue < events.CurrentFinalScore)
+        if (events.CurrentFinalScore <= 20) mark = 2;
+        if (events.CurrentFinalScore > 20 && events.CurrentFinalScore < 40) mark = 5;
+        if (events.CurrentFinalScore >= 40) mark = 10; 
+        while (scoreValue < mark)
         {
             scoreValue++;
             uIElements.ResolutionScoreText.text = scoreValue.ToString();
@@ -232,5 +256,9 @@ public class UIManager : MonoBehaviour {
     void UpdateScoreUI()
     {
         uIElements.ScoreText.text = " " + events.CurrentFinalScore;
+        int upp = manager.currentQuestions + 1;
+        
+        uIElements.Current.text = upp.ToString();
+        
     }
 }
