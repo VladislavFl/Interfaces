@@ -19,6 +19,8 @@ public struct UIManagerParameters
     public Color IncorrectBGColor { get { return incorrectBGColor; } }
     [SerializeField] Color finalBGColor;
     public Color FinalBGColor { get { return finalBGColor; } }
+
+
 }
 [Serializable()]
 public struct UIElements
@@ -54,8 +56,8 @@ public struct UIElements
 
     [Space]
 
-    [SerializeField] TextMeshProUGUI highScoreText;
-    public TextMeshProUGUI HighScoreText { get { return highScoreText; } }
+    [SerializeField] Text highScoreText;
+    public Text HighScoreText { get { return highScoreText; } }
 
     [SerializeField] CanvasGroup mainCanvasGroup;
     public CanvasGroup MainCanvasGroup { get { return mainCanvasGroup; } }
@@ -90,6 +92,10 @@ public class UIManager : MonoBehaviour {
     private int mark = 0;
 
     public GameManager manager;
+    public GameObject finalBG;
+    public GameObject finalMark;
+
+    private bool check = false;
 
     #endregion
 
@@ -175,7 +181,7 @@ public class UIManager : MonoBehaviour {
         switch (type)
         {
             case ResolutionScreenType.Correct:
-                
+
                 uIElements.ResolutionBG.color = parameters.CorrectBGColor;
                 uIElements.ResolutionStateInfoText.text = "Хорошо!";
                 uIElements.ResolutionScoreText.text = "+" + score;
@@ -186,14 +192,26 @@ public class UIManager : MonoBehaviour {
                 uIElements.ResolutionScoreText.text = "-" + score;
                 break;
             case ResolutionScreenType.Finish:
-                uIElements.ResolutionBG.color = parameters.FinalBGColor;
+                //uIElements.ResolutionBG.color = parameters.FinalBGColor;
+
+                if (check == false)
+                {
+                    finalBG.SetActive(true);
+                    check = true;
+                }
+                else
+                {
+                    finalBG.SetActive(true);
+                    check = false;
+                }
 
                 uIElements.ResultSrore.text = "Итог: " + events.CurrentFinalScore;
+                uIElements.ResolutionStateInfoText.GetComponent<Text>().resizeTextForBestFit = false;
                 uIElements.ResolutionStateInfoText.text = "Оценка: ";
                 StartCoroutine(CalculateScore());
                 uIElements.FinishUIElements.gameObject.SetActive(true);
 
-                uIElements.HighScoreText.text = ((highscore > events.StartupHighscore) ? "<color=yellow>new </color>" : string.Empty) + "Rec: " + highscore;
+                uIElements.HighScoreText.text = ((highscore > events.StartupHighscore) ? "<color=yellow>new </color>" : string.Empty) + "Рекорд: " + highscore;
                 
                 break;
         }
@@ -257,8 +275,8 @@ public class UIManager : MonoBehaviour {
     {
         uIElements.ScoreText.text = " " + events.CurrentFinalScore;
         int upp = manager.currentQuestions + 1;
-        
         uIElements.Current.text = upp.ToString();
+
         
     }
 }
