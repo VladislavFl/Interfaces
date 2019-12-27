@@ -300,7 +300,7 @@ using UnityEngine.SceneManagement;
         }
         else if (k == 2)
         {
-            Object[] objs = Resources.LoadAll("Questions2", typeof(Question));
+            Object[] objs = Resources.LoadAll("Questions1", typeof(Question));
             _questions = new Question[objs.Length];
             countQuestions = objs.Length;
             //Debug.Log("Количество вопросов: " + countQuestions);
@@ -313,7 +313,7 @@ using UnityEngine.SceneManagement;
         }
         else if (k == 3)
         {
-            Object[] objs = Resources.LoadAll("Questions3", typeof(Question));
+            Object[] objs = Resources.LoadAll("Questions2", typeof(Question));
             _questions = new Question[objs.Length];
             countQuestions = objs.Length;
             //Debug.Log("Количество вопросов: " + countQuestions);
@@ -323,6 +323,117 @@ using UnityEngine.SceneManagement;
             }
 
             
+        }
+        else if (k == 4)
+        {
+            Object[] objs = Resources.LoadAll("Questions3", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 5)
+        {
+            Object[] objs = Resources.LoadAll("Questions4", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 6)
+        {
+            Object[] objs = Resources.LoadAll("Questions5", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 7)
+        {
+            Object[] objs = Resources.LoadAll("Questions6", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 8)
+        {
+            Object[] objs = Resources.LoadAll("Questions7", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 9)
+        {
+            Object[] objs = Resources.LoadAll("Questions8", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 10)
+        {
+            Object[] objs = Resources.LoadAll("Questions9", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
+        }
+
+        else if (k == 11)
+        {
+            Object[] objs = Resources.LoadAll("Questions10", typeof(Question));
+            _questions = new Question[objs.Length];
+            countQuestions = objs.Length;
+            //Debug.Log("Количество вопросов: " + countQuestions);
+            for (int i = 0; i < objs.Length; i++)
+            {
+                _questions[i] = (Question)objs[i];
+            }
+
+
         }
     }
 

@@ -1463,7 +1463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u044B\u0445\u043E\u0434"
+  m_Text: "\u0412 \u043C\u0435\u043D\u044E"
 --- !u!222 &767547135
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2111,8 +2111,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 849180835}
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1874400496}
+        m_MethodName: Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3167,6 +3167,7 @@ GameObject:
   - component: {fileID: 1874400493}
   - component: {fileID: 1874400492}
   - component: {fileID: 1874400494}
+  - component: {fileID: 1874400496}
   - component: {fileID: 1874400495}
   m_Layer: 5
   m_Name: ResolutionScreen
@@ -3266,6 +3267,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1874400496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874400490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ac4dc056f0f684aa3c92dc34a76f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainMenu: {fileID: 0}
+  Submenu: {fileID: 0}
+  Levels: {fileID: 0}
+  Levels2: {fileID: 0}
+  Levels3: {fileID: 0}
+  About: {fileID: 0}
+  About2: {fileID: 0}
+  parametrs: {fileID: 11400000, guid: 346d6322328f74d44b447fa74847d527, type: 2}
 --- !u!1 &1889068647
 GameObject:
   m_ObjectHideFlags: 0

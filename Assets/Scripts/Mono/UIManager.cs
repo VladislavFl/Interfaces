@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 [Serializable()]
 public struct UIManagerParameters
@@ -19,7 +20,6 @@ public struct UIManagerParameters
     public Color IncorrectBGColor { get { return incorrectBGColor; } }
     [SerializeField] Color finalBGColor;
     public Color FinalBGColor { get { return finalBGColor; } }
-
 
 }
 [Serializable()]
@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour {
     private             int                    resStateParaHash             = 0;
 
     private             IEnumerator            IE_DisplayTimedResolution    = null;
-    private int mark = 0;
+    private double mark = 0;
 
     public GameManager manager;
     public GameObject finalBG;
@@ -129,7 +129,7 @@ public class UIManager : MonoBehaviour {
 
         UpdateScoreUI();
         resStateParaHash = Animator.StringToHash("ScreenState");
-        
+
 
     }
 
@@ -212,7 +212,7 @@ public class UIManager : MonoBehaviour {
                 uIElements.FinishUIElements.gameObject.SetActive(true);
 
                 uIElements.HighScoreText.text = ((highscore > events.StartupHighscore) ? "<color=yellow>new </color>" : string.Empty) + "Рекорд: " + highscore;
-                
+
                 break;
         }
     }
@@ -222,17 +222,43 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     IEnumerator CalculateScore()
     {
-        var scoreValue = 0;
-        if (events.CurrentFinalScore <= 20) mark = 2;
-        if (events.CurrentFinalScore > 20 && events.CurrentFinalScore < 40) mark = 5;
-        if (events.CurrentFinalScore >= 40) mark = 10; 
-        while (scoreValue < mark)
+        var scoreValue = 10;
+        if (events.CurrentFinalScore < 0) mark = 0;
+        if (events.CurrentFinalScore >= 0 && events.CurrentFinalScore <= 20) mark = 1;
+        if (events.CurrentFinalScore > 20 && events.CurrentFinalScore <= 40) mark = 2;
+        if (events.CurrentFinalScore > 40 && events.CurrentFinalScore <= 60) mark = 3;
+        if (events.CurrentFinalScore > 60 && events.CurrentFinalScore <= 80) mark = 4;
+        if (events.CurrentFinalScore > 80 && events.CurrentFinalScore <= 100) mark = 5;
+        if (events.CurrentFinalScore > 100 && events.CurrentFinalScore <= 120) mark = 6;
+        if (events.CurrentFinalScore > 120 && events.CurrentFinalScore <= 140) mark = 7;
+        if (events.CurrentFinalScore > 140 && events.CurrentFinalScore <= 160) mark = 8;
+        if (events.CurrentFinalScore > 160 && events.CurrentFinalScore <= 180) mark = 9;
+        if (events.CurrentFinalScore > 180 && events.CurrentFinalScore < 200) mark = 9.5;
+        if (events.CurrentFinalScore == 200) mark = 10;
+        while (scoreValue >= mark)
         {
-            scoreValue++;
+
             uIElements.ResolutionScoreText.text = scoreValue.ToString();
+            scoreValue--;
+            Thread.Sleep(200);
 
             yield return null;
         }
+    }
+
+    /// <summary>
+    /// Random
+    ///</summary>
+    void Stirring(int[] mass)
+    {
+      for (int i = mass.Length - 1; i >= 1; i--)
+      {
+          int j = UnityEngine.Random.Range(0, i + 1);
+
+          int tmp = mass[j];
+          mass[j] = mass[i];
+          mass[i] = tmp;
+      }
     }
 
     /// <summary>
@@ -243,10 +269,14 @@ public class UIManager : MonoBehaviour {
         EraseAnswers();
 
         float offset = 0 - parameters.Margins;
+        int[] mass = {0,1,2,3};
+
+        Stirring(mass);
+
         for (int i = 0; i < question.Answers.Length; i++)
         {
             AnswerData newAnswer = (AnswerData)Instantiate(answerPrefab, uIElements.AnswersContentArea);
-            newAnswer.UpdateData(question.Answers[i].Info, i);
+            newAnswer.UpdateData(question.Answers[mass[i]].Info, mass[i]);
 
             newAnswer.Rect.anchoredPosition = new Vector2(0, offset);
 
@@ -273,10 +303,11 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     void UpdateScoreUI()
     {
+
         uIElements.ScoreText.text = " " + events.CurrentFinalScore;
         int upp = manager.currentQuestions + 1;
         uIElements.Current.text = upp.ToString();
 
-        
+
     }
 }
